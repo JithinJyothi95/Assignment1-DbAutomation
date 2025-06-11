@@ -9,7 +9,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install MySQL client
-        run: sudo apt-get update && sudo apt-get install -y mysql-client
+        run: |
+          if command -v sudo >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y mysql-client
+          else
+            apt-get update && apt-get install -y mysql-client
+          fi
 
       - name: Deploy to Database
         env:
